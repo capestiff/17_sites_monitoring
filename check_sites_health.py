@@ -27,20 +27,15 @@ def get_domain_expiration_date(domain_url):
 
 
 def is_file(str_input):
-    if not str_input:
-        return False
-    elif Path(str_input).is_file():
+    if Path(str_input).is_file():
         return True
     else:
         print('Please, verify the path and filename')
         return False
 
-if __name__ == '__main__':
-    filepath = ''
-    while not is_file(filepath):
-        filepath = input('Enter the path to the file, containing URLs for checking: ')
 
-    link_list = load_urls4check(filepath)
+def check_urls_for_status_and_expdate(filepath_):
+    link_list = load_urls4check(filepath_)
 
     for url in link_list:
         if is_server_respond_with_200(url):
@@ -53,3 +48,10 @@ if __name__ == '__main__':
                 print(url, 'HTTP 200 - OK, paid under a month - ', expiration_date)
         else:
             print(url, 'ERROR')
+
+if __name__ == '__main__':
+    filepath = ''
+    while not is_file(filepath):
+        filepath = input('Enter the path to the file, containing URLs for checking: ')
+
+    check_urls_for_status_and_expdate(filepath)
